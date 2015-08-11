@@ -8,8 +8,8 @@
 if( is_admin() ) {
 	// Load additional css and js for image uploads on the Cyber Chimps Framework Theme Options page
 	$cyberchimps_page = 'appearance_page_cyberchimps_theme_options';
-	//add_action( "admin_print_styles-$cyberchimps_page", 'cyberchimps_mlu_css', 0 );
-	//add_action( "admin_print_scripts-$cyberchimps_page", 'cyberchimps_mlu_js', 0 );
+	add_action( "admin_print_styles-$cyberchimps_page", 'cyberchimps_mlu_css', 0 );
+	add_action( "admin_print_scripts-$cyberchimps_page", 'cyberchimps_mlu_js', 0 );
 }
 
 /**
@@ -241,3 +241,24 @@ if( !function_exists( 'cyberchimps_mlu_modify_tabs' ) ) {
 		return $tabs;
 	}
 }
+
+if( !function_exists( 'cyberchimps_mlu_init' ) ) {
+	function cyberchimps_mlu_init() {
+		register_post_type( 'cybrchmpsthmoption', array(
+			'labels'            => array(
+				'name' => __( 'Theme Options Media', 'cyberchimps_elements' ),
+			),
+			'public'            => true,
+			'show_ui'           => false,
+			'capability_type'   => 'post',
+			'hierarchical'      => false,
+			'rewrite'           => false,
+			'supports'          => array( 'title', 'editor' ),
+			'query_var'         => false,
+			'can_export'        => true,
+			'show_in_nav_menus' => false,
+			'public'            => false
+		) );
+	}
+}
+add_action( 'admin_init', 'cyberchimps_mlu_init' );

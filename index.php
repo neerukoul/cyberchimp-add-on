@@ -1,25 +1,23 @@
 <?php
 /*
 Plugin Name: Cyberchimp Add Ons
-Description: Added functionality for the Cyberchimp themes
+Description: Added functionality for the Cyberchimp Free themes
 Version: 1
 Author: CyberChimps
 Author URI: http://www.cyberchimps.com
 License: GPL2
 */
-// Load santize before options-init and options core
-		require_once( dirname( __FILE__ ) . '/options-sanitize.php' );		
-		
-		// Load default core settings
-		require_once(dirname( __FILE__ ) . '/options-core.php' );
 
-		// Load theme upsell.
-		require_once( dirname( __FILE__ ) . '/theme-upsell.php' );
+// Load default core settings
+require_once(dirname( __FILE__ ) . '/options-core.php' );
+
+// Load theme upsell.
+require_once( dirname( __FILE__ ) . '/theme-upsell.php' );
 
 /* If the user can't edit theme options, no use running this plugin */
-add_action( 'init', 'cyberchimps_edit_themes_role_check' );
-function cyberchimps_edit_themes_role_check() {
-	if( current_user_can( 'edit_theme_options' ) ) {
+add_action( 'init', 'cyberchimps_edit_themes_role_check_free' );
+function cyberchimps_edit_themes_role_check_free() {
+    	if( current_user_can( 'edit_theme_options' )) {
 		// If the user can edit theme options, let the fun begin!
 		add_action( 'admin_init', 'cyberchimps_admin_init' );
 		add_action( 'admin_menu', 'cyberchimps_admin_add_page' );
@@ -57,8 +55,9 @@ function cyberchimps_load_scripts() {
     $directory_uri = plugin_dir_url( __FILE__ );
 
     wp_enqueue_media();
-    wp_enqueue_script( 'theme-option-media-uploader-3.5', $directory_uri . 'js/media-uploader-new.min.js', array( 'jquery' ) );
-
+    wp_enqueue_script( 'theme-option-media-uploader-3.6', get_template_directory_uri() . '/cyberchimps/options/lib/js/media-uploader-new.min.js', array( 'jquery' ) );
+    //wp_enqueue_script( 'theme-option-media-uploader-3.5', plugins_url( 'cyberchimp-add-on/js/media-uploader-new.min.js' , dirname(__FILE__) ) , array( 'jquery' ) );
+    
     // Enqueued scripts
     wp_enqueue_script( 'jquery-ui-core' );
     wp_enqueue_script( 'jquery-ui-sortable' );
